@@ -1,7 +1,7 @@
-#include "parser/Parser.hpp"
-#include "preprocessor/Preprocessor.hpp"
-#include "indexer/Index.hpp"
-#include "retriever/Retrieval.hpp"
+#include "parser/MaamTeam_Parser.hpp"
+#include "preprocessor/MaamTeam_Preprocessor.hpp"
+#include "indexer/MaamTeam_Index.hpp"
+#include "retriever/MaamTeam_Retrieval.hpp"
 
 #include <fstream>
 #include <iostream>

@@ -1,5 +1,5 @@
-#include "Parser.hpp"
-#include "../preprocessor/Preprocessor.hpp"
+#include "MaamTeam_Parser.hpp"
+#include "../preprocessor/MaamTeam_Preprocessor.hpp"
 
 #include <fstream>
 #include <iostream>
