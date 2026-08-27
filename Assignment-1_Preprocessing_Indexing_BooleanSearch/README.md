@@ -2,7 +2,8 @@
 
 This is a C++ implementation of the PA1 preprocessing, indexing, and Boolean search pipeline.
 
-See [scripts/README.md](../scripts/README.md) for build, run, and test instructions.
+Refer [scripts/README.md](../scripts/README.md) for build, run, and test instructions; And [docs/PA1_WRITEUP.md](docs/PA1_WRITEUP.md) for the methodology, repository structure,
+software documentation, work distribution, and testing.
 
 ## Notes
 
