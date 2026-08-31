@@ -2,8 +2,9 @@
 
 This is a C++ implementation of the PA1 preprocessing, indexing, and Boolean search pipeline.
 
-Refer [scripts/RUNTIME_INSTRUCTIONS.md](scripts/RUNTIME_INSTRUCTIONS.md) for build, run, and test instructions; And [docs/PA1_WRITEUP.md](docs/PA1_WRITEUP.md) for the methodology, repository structure,
-software documentation, work distribution, and testing.
+Refer [scripts/RUNTIME_INSTRUCTIONS.md](scripts/RUNTIME_INSTRUCTIONS.md) for build, run, and test instructions.
+
+Refer [docs/PA1_WRITEUP.md](docs/PA1_WRITEUP.md) for a brief write-up on methodology, repository structure, software documentation, work distribution, and testing.
 
 ## Notes
 
@@ -21,3 +22,5 @@ Run the verification script to test all 12 sample queries:
 cd tests
 .\verify_queries.ps1
 ```
+
+**NOTE: The result docid list for given sample test Boolean queries are mentioned in the Write-Up ([docs/PA1_WRITEUP.md](docs/PA1_WRITEUP.md))**

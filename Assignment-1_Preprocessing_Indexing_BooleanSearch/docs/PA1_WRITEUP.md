@@ -275,11 +275,10 @@ The project was divided by pipeline responsibility so that each part could be de
 
 | Responsibility | Allocation |
 | --- | --- |
-| Preprocessing | Two team members worked jointly on tokenization, normalization, stop-word removal, and Porter stemming. |
-| Parsing | One team member handled Cranfield-format parsing and processed-collection output. |
-| Indexing | One team member handled inverted-index construction, sorting, serialization, and loading. |
-| Retrieval | One team member handled Boolean query parsing and posting-list operations. |
-| Integration | The team combined the modules through `main.cpp`, checked their interfaces, and prepared the documentation. |
+| Preprocessing | 2 members worked jointly on tokenization, normalization, stop-word removal, and Porter stemming. |
+| Parsing | 1  member handled Cranfield-format parsing and processed-collection output. |
+| Indexing | 1 member handled inverted-index construction, sorting, serialization, and loading. |
+| Retrieval | 1 member handled Boolean query parsing and posting-list operations. |
 
 ## 9. Testing and Results
 
