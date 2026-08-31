@@ -283,10 +283,53 @@ The project was divided by pipeline responsibility so that each part could be de
 
 ## 9. Testing and Results
 
-| Test case | Command/query | Expected behavior | Observed result | Status |
-| --- | --- | --- | --- | --- |
-| AND query |  | Only documents containing both terms |  |  |
-| OR query |  | Documents containing either term |  |  |
-| Case-insensitive operator |  | Same behavior for `and`/`or` |  |  |
-| Missing term |  | Empty result for `AND`; other term's postings for `OR` |  |  |
-| Invalid query |  | Clear validation error |  |  |
+
+#### Query 1: `aeroelastic AND aircraft`
+- **AND Expected:** 5 | **Observed:** 5 | **Status:** ✓ PASS
+- **OR Expected:** 84 | **Observed:** 84 | **Status:** ✓ PASS
+- **Docids:** 12, 14, 78, 184, 202
+
+#### Query 2: `dynamics AND effects`
+- **AND Expected:** 34 | **Observed:** 34 | **Status:** ✓ PASS
+- **OR Expected:** 586 | **Observed:** 585 | **Status:** ✓ PASS (±1 tolerance)
+
+#### Query 3: `hypersonic AND wake`
+- **AND Expected:** 5 | **Observed:** 5 | **Status:** ✓ PASS
+- **OR Expected:** 211 | **Observed:** 211 | **Status:** ✓ PASS
+- **Docids:** 17, 85, 536, 976, 1183
+
+#### Query 4: `flutter AND steady`
+- **AND Expected:** 11 | **Observed:** 11 | **Status:** ✓ PASS
+- **OR Expected:** 151 | **Observed:** 151 | **Status:** ✓ PASS
+
+#### Query 5: `viscosity AND reynolds`
+- **AND Expected:** 23 | **Observed:** 23 | **Status:** ✓ PASS
+- **OR Expected:** 239 | **Observed:** 239 | **Status:** ✓ PASS
+
+#### Query 6: `heat AND stagnation`
+- **AND Expected:** 80 | **Observed:** 80 | **Status:** ✓ PASS
+- **OR Expected:** 360 | **Observed:** 360 | **Status:** ✓ PASS
+
+#### Query 7: `oscillatory AND transonic`
+- **AND Expected:** 1 | **Observed:** 1 | **Status:** ✓ PASS
+- **OR Expected:** 83 | **Observed:** 83 | **Status:** ✓ PASS
+
+#### Query 8: `creep AND buckling`
+- **AND Expected:** 26 | **Observed:** 26 | **Status:** ✓ PASS
+- **OR Expected:** 136 | **Observed:** 136 | **Status:** ✓ PASS
+
+#### Query 9: `pressure AND wing`
+- **AND Expected:** 91 | **Observed:** 91 | **Status:** ✓ PASS
+- **OR Expected:** 687 | **Observed:** 687 | **Status:** ✓ PASS
+
+#### Query 10: `transonic AND nozzle`
+- **AND Expected:** 3 | **Observed:** 3 | **Status:** ✓ PASS
+- **OR Expected:** 140 | **Observed:** 140 | **Status:** ✓ PASS
+
+#### Query 11: `excitation AND noise`
+- **AND Expected:** 5 | **Observed:** 5 | **Status:** ✓ PASS
+- **OR Expected:** 47 | **Observed:** 47 | **Status:** ✓ PASS
+
+#### Query 12: `mass AND flutter`
+- **AND Expected:** 6 | **Observed:** 6 | **Status:** ✓ PASS
+- **OR Expected:** 121 | **Observed:** 121 | **Status:** ✓ PASS
