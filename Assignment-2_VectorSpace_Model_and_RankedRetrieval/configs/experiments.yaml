@@ -1,0 +1,22 @@
+# All runs use Terrier's sparse TF_IDF vector-space model.
+baseline:
+  name: terrier_tfidf_baseline
+  preprocessing: {stopwords: true, stemming: true}
+  retrieval: {model: TF_IDF, c: 1.0}
+
+parameter_tuning:
+  c_values: [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
+
+preprocessing_ablation:
+  - name: terrier_tfidf_stopwords_stemming
+    preprocessing: {stopwords: true, stemming: true}
+  - name: terrier_tfidf_stopwords_no_stemming
+    preprocessing: {stopwords: true, stemming: false}
+  - name: terrier_tfidf_no_stopwords_stemming
+    preprocessing: {stopwords: false, stemming: true}
+  - name: terrier_tfidf_no_stopwords_no_stemming
+    preprocessing: {stopwords: false, stemming: false}
+
+retrieval:
+  top_k: 1000
+  default_model: TF_IDF

@@ -1,0 +1,158 @@
+[
+  {
+    "name": "terrier_tfidf_baseline",
+    "timings": {
+      "index_time": 18.006805600001826,
+      "retrieval_time": 2.9642253999918466,
+      "avg_query_time": 0.013174335111074874
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "A_baseline",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_c025",
+    "timings": {
+      "index_time": 18.624077400003443,
+      "retrieval_time": 3.041415200001211,
+      "avg_query_time": 0.013517400888894271
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "B_parameter_tuning",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_c05",
+    "timings": {
+      "index_time": 18.0098774000071,
+      "retrieval_time": 2.9888475999905495,
+      "avg_query_time": 0.013283767111069109
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "B_parameter_tuning",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_c075",
+    "timings": {
+      "index_time": 18.069385300012073,
+      "retrieval_time": 3.0430302000022493,
+      "avg_query_time": 0.013524578666676664
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "B_parameter_tuning",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_c10",
+    "timings": {
+      "index_time": 17.312697400004254,
+      "retrieval_time": 3.045252199997776,
+      "avg_query_time": 0.013534454222212338
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "B_parameter_tuning",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_c125",
+    "timings": {
+      "index_time": 18.17840969999088,
+      "retrieval_time": 2.854847399998107,
+      "avg_query_time": 0.012688210666658253
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "B_parameter_tuning",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_c15",
+    "timings": {
+      "index_time": 18.39399469998898,
+      "retrieval_time": 3.0256488000013633,
+      "avg_query_time": 0.013447328000006059
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "B_parameter_tuning",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_c20",
+    "timings": {
+      "index_time": 18.646539800000028,
+      "retrieval_time": 3.3257039999880362,
+      "avg_query_time": 0.014780906666613495
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "B_parameter_tuning",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_stopwords_stemming",
+    "timings": {
+      "index_time": 18.11649139999645,
+      "retrieval_time": 3.007145200012019,
+      "avg_query_time": 0.013365089777831195
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "C_preprocessing_ablation",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_stopwords_no_stemming",
+    "timings": {
+      "index_time": 30.580676099998527,
+      "retrieval_time": 2.6310781999927713,
+      "avg_query_time": 0.01169368088885676
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "C_preprocessing_ablation",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_no_stopwords_stemming",
+    "timings": {
+      "index_time": 25.12275860000227,
+      "retrieval_time": 3.7129098000004888,
+      "avg_query_time": 0.016501821333335505
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "C_preprocessing_ablation",
+      "model": "TF_IDF"
+    }
+  },
+  {
+    "name": "terrier_tfidf_no_stopwords_no_stemming",
+    "timings": {
+      "index_time": 40.41015769999649,
+      "retrieval_time": 3.8054470000060974,
+      "avg_query_time": 0.016913097777804878
+    },
+    "metadata": {
+      "engine": "PyTerrier/Terrier",
+      "stage": "C_preprocessing_ablation",
+      "model": "TF_IDF"
+    }
+  }
+]

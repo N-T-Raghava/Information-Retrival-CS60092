@@ -1,0 +1,13 @@
+name,avg_query_time,engine,index_time,model,retrieval_time,stage
+terrier_tfidf_baseline,0.013174335111074874,PyTerrier/Terrier,18.006805600001826,TF_IDF,2.9642253999918466,A_baseline
+terrier_tfidf_c025,0.013517400888894271,PyTerrier/Terrier,18.624077400003443,TF_IDF,3.041415200001211,B_parameter_tuning
+terrier_tfidf_c05,0.013283767111069109,PyTerrier/Terrier,18.0098774000071,TF_IDF,2.9888475999905495,B_parameter_tuning
+terrier_tfidf_c075,0.013524578666676664,PyTerrier/Terrier,18.069385300012073,TF_IDF,3.0430302000022493,B_parameter_tuning
+terrier_tfidf_c10,0.013534454222212338,PyTerrier/Terrier,17.312697400004254,TF_IDF,3.045252199997776,B_parameter_tuning
+terrier_tfidf_c125,0.012688210666658253,PyTerrier/Terrier,18.17840969999088,TF_IDF,2.854847399998107,B_parameter_tuning
+terrier_tfidf_c15,0.013447328000006059,PyTerrier/Terrier,18.39399469998898,TF_IDF,3.0256488000013633,B_parameter_tuning
+terrier_tfidf_c20,0.014780906666613495,PyTerrier/Terrier,18.646539800000028,TF_IDF,3.3257039999880362,B_parameter_tuning
+terrier_tfidf_stopwords_stemming,0.013365089777831195,PyTerrier/Terrier,18.11649139999645,TF_IDF,3.007145200012019,C_preprocessing_ablation
+terrier_tfidf_stopwords_no_stemming,0.01169368088885676,PyTerrier/Terrier,30.580676099998527,TF_IDF,2.6310781999927713,C_preprocessing_ablation
+terrier_tfidf_no_stopwords_stemming,0.016501821333335505,PyTerrier/Terrier,25.12275860000227,TF_IDF,3.7129098000004888,C_preprocessing_ablation
+terrier_tfidf_no_stopwords_no_stemming,0.016913097777804878,PyTerrier/Terrier,40.41015769999649,TF_IDF,3.8054470000060974,C_preprocessing_ablation
