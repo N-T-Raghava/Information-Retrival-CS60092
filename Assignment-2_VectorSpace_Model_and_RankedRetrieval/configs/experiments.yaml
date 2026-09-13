@@ -1,22 +1,24 @@
-# All runs use Terrier's sparse TF_IDF vector-space model.
-baseline:
-  name: terrier_tfidf_baseline
-  preprocessing: {stopwords: true, stemming: true}
-  retrieval: {model: TF_IDF, c: 1.0}
-
-parameter_tuning:
-  c_values: [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
-
-preprocessing_ablation:
-  - name: terrier_tfidf_stopwords_stemming
-    preprocessing: {stopwords: true, stemming: true}
-  - name: terrier_tfidf_stopwords_no_stemming
-    preprocessing: {stopwords: true, stemming: false}
-  - name: terrier_tfidf_no_stopwords_stemming
-    preprocessing: {stopwords: false, stemming: true}
-  - name: terrier_tfidf_no_stopwords_no_stemming
-    preprocessing: {stopwords: false, stemming: false}
-
-retrieval:
-  top_k: 1000
-  default_model: TF_IDF
+preprocessing:
+  - {name: stem_stop_title3, stem: true, stopwords: true, title_weight: 3, dedupe_title: false}
+  - {name: stem_stop_title3_dedupe, stem: true, stopwords: true, title_weight: 3, dedupe_title: true}
+  - {name: stem_stop_title2, stem: true, stopwords: true, title_weight: 2, dedupe_title: false}
+  - {name: stem_stop_title2_author_bib, stem: true, stopwords: true, title_weight: 2, include_author: true, include_bib: true}
+  - {name: stem_stop_title2_dedupe, stem: true, stopwords: true, title_weight: 2, dedupe_title: true}
+  - {name: stem_stop_title1, stem: true, stopwords: true, title_weight: 1}
+  - {name: stem_nostop_title1, stem: true, stopwords: false, title_weight: 1}
+  - {name: nostem_stop_title1, stem: false, stopwords: true, title_weight: 1}
+  - {name: nostem_nostop_title1, stem: false, stopwords: false, title_weight: 1}
+  - {name: stem_stop_body, stem: true, stopwords: true, title_weight: 0}
+models: [lnc.ltc, Lnc.ltc, ltc.ltc, ltc.ltn, anc.atc, anc.ltc, bnc.ltc, lnu.ltu]
+pivot_slopes: [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40]
+rocchio:
+  - {alpha: 1.0, beta: 0.5, gamma: 0.0, fb_docs: 5, fb_terms: 15}
+  - {alpha: 1.0, beta: 0.5, gamma: 0.1, fb_docs: 10, fb_terms: 25}
+  - {alpha: 1.0, beta: 0.75, gamma: 0.15, fb_docs: 10, fb_terms: 20}
+  - {alpha: 1.2, beta: 0.6, gamma: 0.2, fb_docs: 15, fb_terms: 40}
+  - {alpha: 1.0, beta: 0.3, gamma: 0.0, fb_docs: 5, fb_terms: 10}
+  - {alpha: 1.0, beta: 0.4, gamma: 0.05, fb_docs: 20, fb_terms: 50}
+  - {alpha: 1.0, beta: 0.75, gamma: 0.0, fb_docs: 8, fb_terms: 30}
+  - {alpha: 1.0, beta: 1.0, gamma: 0.15, fb_docs: 10, fb_terms: 30}
+retrieval: {top_k: 1000}
+terrier: {enabled: true, name: terrier_tfidf_baseline, model: TF_IDF, c: 1.0}

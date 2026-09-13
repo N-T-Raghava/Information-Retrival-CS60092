@@ -30,88 +30,44 @@ class CranfieldParser:
             if not docno:
                 continue
             
-            title = ""
-            author = ""
-            bibliography = ""
-            text = ""
+            fields = {"T": [], "A": [], "B": [], "W": []}
 
             current_field = None
             current_content = []
+
+            def flush_field():
+                if current_field is not None and current_content:
+                    fields[current_field].append("\n".join(current_content).strip())
             
             for line in lines[1:]:
                 if line.startswith('.T'):
-                    if current_field:
-                        value = '\n'.join(current_content).strip()
-                        if current_field == 'T':
-                            title = value
-                        elif current_field == 'A':
-                            author = value
-                        elif current_field == 'B':
-                            bibliography = value
-                        elif current_field == 'W':
-                            text = value
+                    flush_field()
                     current_field = 'T'
                     current_content = [line[2:].strip()]
                 elif line.startswith('.A'):
-                    if current_field:
-                        value = '\n'.join(current_content).strip()
-                        if current_field == 'T':
-                            title = value
-                        elif current_field == 'A':
-                            author = value
-                        elif current_field == 'B':
-                            bibliography = value
-                        elif current_field == 'W':
-                            text = value
+                    flush_field()
                     current_field = 'A'
                     current_content = [line[2:].strip()]
                 elif line.startswith('.B'):
-                    if current_field:
-                        value = '\n'.join(current_content).strip()
-                        if current_field == 'T':
-                            title = value
-                        elif current_field == 'A':
-                            author = value
-                        elif current_field == 'B':
-                            bibliography = value
-                        elif current_field == 'W':
-                            text = value
+                    flush_field()
                     current_field = 'B'
                     current_content = [line[2:].strip()]
                 elif line.startswith('.W'):
-                    if current_field:
-                        value = '\n'.join(current_content).strip()
-                        if current_field == 'T':
-                            title = value
-                        elif current_field == 'A':
-                            author = value
-                        elif current_field == 'B':
-                            bibliography = value
-                        elif current_field == 'W':
-                            text = value
+                    flush_field()
                     current_field = 'W'
                     current_content = [line[2:].strip()]
                 else:
                     if current_field:
                         current_content.append(line)
             
-            if current_field:
-                value = '\n'.join(current_content).strip()
-                if current_field == 'T':
-                    title = value
-                elif current_field == 'A':
-                    author = value
-                elif current_field == 'B':
-                    bibliography = value
-                elif current_field == 'W':
-                    text = value
+            flush_field()
             
             doc = Document(
                 docno=docno,
-                title=title,
-                author=author,
-                bibliography=bibliography,
-                text=text
+                title="\n".join(value for value in fields["T"] if value),
+                author="\n".join(value for value in fields["A"] if value),
+                bibliography="\n".join(value for value in fields["B"] if value),
+                text="\n".join(value for value in fields["W"] if value),
             )
             
             if docno in doc_dict:

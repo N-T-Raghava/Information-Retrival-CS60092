@@ -1,100 +1,91 @@
-# IR Assignment 2: Vector Space Model and Ranked Retrieval
+# IR Assignment 2: Ranked Retrieval
 
-This project implements ranked retrieval on the Cranfield collection using the open-source Terrier search engine through PyTerrier. Only Terrier's sparse `TF_IDF` vector-space model is used. Refer to [the implementation write-up](IMPLEMENTATION_DETAILS.md) for details.
+This project evaluates two sparse vector-space retrieval systems on the Cranfield collection:
+
+- Terrier `TF_IDF`, the standard baseline.
+- Custom SMART VSM with pivoted normalization and Rocchio feedback.
+
+Both systems use the same parsed collection, relevance judgments, deterministic topic split, metrics, and output directories. There is one experiment configuration and one runner.
+
+The detailed implementation report is available in [MaamTeam_IR_Assignment_II_Report](MaamTeam_IR_Assignment_II_Report.pdf).
 
 ## Setup
 
-PyTerrier runs Terrier through Java. Install Java 11 or newer and configure it before running the experiments.
-
-```powershell
-winget install --id EclipseAdoptium.Temurin.11.JDK --exact --accept-source-agreements --accept-package-agreements
-```
-
-After installation, reopen PowerShell and configure the JDK. Update the path if a different Temurin version is installed:
-
-```powershell
-$env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-11.0.32.101-hotspot'
-$userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
-[Environment]::SetEnvironmentVariable('JAVA_HOME', $env:JAVA_HOME, 'User')
-[Environment]::SetEnvironmentVariable('Path', "$userPath;$env:JAVA_HOME\bin", 'User')
-$env:Path = "$env:JAVA_HOME\bin;$env:Path"
-java -version
-```
-
-Install the Python dependencies from the Assignment 2 directory:
+Install Python dependencies and Java 11 or newer for Terrier:
 
 ```powershell
 cd Assignment-2_VectorSpace_Model_and_RankedRetrieval
 pip install -r requirements.txt
 ```
 
-## Run the Experiments
-
-Run the complete staged experiment plan:
+On Windows PowerShell, configure the JDK before running Terrier. Update the path if a different Temurin version is installed:
 
 ```powershell
-python scripts/run_all.py --config configs/experiments.yaml --data-dir data --index-path indexes/cranfield --force-index
+$env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-11.0.32.101-hotspot'
+if (-not (Test-Path $env:JAVA_HOME)) { throw "JDK not found at $env:JAVA_HOME" }
+$userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+[Environment]::SetEnvironmentVariable('JAVA_HOME', $env:JAVA_HOME, 'User')
+if ($userPath -notlike "*$env:JAVA_HOME\bin*") {
+	[Environment]::SetEnvironmentVariable('Path', "$userPath;$env:JAVA_HOME\bin", 'User')
+}
+$env:Path = "$env:JAVA_HOME\bin;$env:Path"
+java -version
 ```
 
-The runner performs:
+The `JAVA_HOME` directory must contain a Java 11 or newer JDK. Restart PowerShell after changing the user-level environment variables if a new shell does not see the update.
 
-- Group A: TF-IDF baseline
-- Group B: `c` tuning for `0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0`
-- Group C: stopword and stemming ablations using the best `c` from Group B
-
-Results are written to `results/`, Terrier indexes to `indexes/`, and timing data to `benchmarks/`.
-
-To build one Terrier index separately:
+## Run All Experiments
 
 ```powershell
-python scripts/build_index.py --data-dir data --index-path indexes/terrier_tfidf_baseline --force
+python scripts/run_all.py --config configs/experiments.yaml --data-dir data
 ```
 
-For ad-hoc queries, use a tab-separated file containing `qid<TAB>query text`:
+For a clean Terrier index rebuild:
 
 ```powershell
-python scripts/search.py --index indexes/terrier_tfidf_baseline --query-file test_queries.txt --output results/unknown_queries.txt --model tfidf --top-k 1000
+python scripts/run_all.py --config configs/experiments.yaml --data-dir data --force-index
 ```
 
-- Refer [USAGE_GUIDE](USAGE_GUIDE.md) for more commands and instructions
+Useful options:
 
-## Project Structure
+- `--top-k 1000` overrides the configured retrieval depth.
+- `--index-path indexes/terrier_tfidf_baseline` controls the Terrier index location.
+- `--results-dir results` controls experiment outputs.
+- `--benchmarks-dir benchmarks` controls timing outputs.
 
-- `src/` - Main source code
-  - `data/` - Data parsing and models
-  - `retrieval/` - PyTerrier/Terrier indexing and retrieval adapter
-  - `evaluation/` - Evaluation metrics
-  - `benchmarking/` - Performance benchmarking
-  - `io/` - Result file I/O
-- `data/` - Cranfield collection
-- `indexes/` - Built indexes
-- `results/` - Experiment results
-- `benchmarks/` - Benchmark data
-- `configs/` - Configuration files
+## Experiment Stages
 
-## Retrieval Experiments
+The runner executes these stages in order:
 
-- Group A: Terrier `TF_IDF` baseline with `c=1.0`
-- Group B: Terrier `TF_IDF` tuning with `c` values `0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0`
-- Group C: four stopword/stemming ablations using the MAP-best `c`
-- Every experiment uses its own Terrier index
+1. Preprocessing sweep for title weighting, stopwords, stemming, field inclusion, and title deduplication.
+2. SMART scheme comparison.
+3. SMART pivot-slope tuning.
+4. Rocchio feedback tuning.
+5. Combined SMART model and feedback selection.
+6. Terrier `TF_IDF` baseline evaluation using the selected preprocessing.
+7. Final held-out and all-topic evaluation.
 
-## Evaluation Metrics
+The held-out split uses every third topic for validation; the remaining topics are used for training-stage selection.
 
-- MAP (Mean Average Precision)
-- P@5, P@10 (Precision at k)
-- R@10 (Recall at 10)
-- MRR (Mean Reciprocal Rank)
-- nDCG@10, nDCG@20 (Normalized Discounted Cumulative Gain)
-- R-Precision
+## Outputs
 
-## Key Features
+All outputs are generated under the configured directories:
 
-- **Reproducible**: Deterministic processing, all parameters configured
-- **Modular**: Independent components for preprocessing, indexing, retrieval, evaluation
-- **Configurable**: YAML-based experiment configuration
-- **Tested**: Comprehensive pytest suite
-- **Unknown query compatible**: Works with arbitrary queries and query formats
-- **Benchmarked**: Separate Terrier indexing and query timing
+- `results/MaamTeam_stage1_preprocessing.csv` through `results/MaamTeam_stage5_best_combination.csv`
+- `results/MaamTeam_terrier_tfidf.txt`
+- `results/MaamTeam_results.txt`
+- `results/MaamTeam_best_config.json`
+- `results/experiment_summary.csv` and `.json`
+- `benchmarks/timing.csv` and `.json`
 
-PyTerrier requires Java 11 or newer. Set `JAVA_HOME` to the JDK directory before running an index or experiment command.
+The final configuration records both the selected SMART system and Terrier baseline metrics.
+
+## Source Layout
+
+- `src/data/` parses Cranfield documents, queries, and qrels.
+- `src/retrieval/terrier_pipeline.py` owns Terrier indexing and retrieval.
+- `src/retrieval/smart_vsm.py` owns SMART weighting and Rocchio feedback.
+- `src/evaluation/metrics.py` computes all reported metrics.
+- `src/io/run_writer.py` writes TREC-format runs.
+- `configs/experiments.yaml` contains all experiment settings.
+- `scripts/run_all.py` is the only experiment entry point.
