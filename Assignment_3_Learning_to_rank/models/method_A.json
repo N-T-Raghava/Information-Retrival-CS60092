@@ -1,0 +1,9 @@
+{
+ "weights": {
+  "title": 0.38,
+  "author": 0.21,
+  "bib": 0.14,
+  "text": 0.27
+ },
+ "k_star": 7
+}
